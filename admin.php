@@ -26,8 +26,16 @@ if( !defined("PHPWG_ROOT_PATH") )
   die ("Hacking attempt!");
 }
 
+define(
+  'PHOTOS_ADD_BASE_URL',
+  get_root_url().'admin.php?page=photos_add'
+  );
+
 include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
 include_once(PHPWG_ROOT_PATH.'admin/include/tabsheet.class.php');
+include_once(PHPWG_ROOT_PATH.'admin/include/functions_upload.inc.php');
+include_once(PHPWG_ROOT_PATH.'admin/include/image.class.php');
+include_once(PHPWG_ROOT_PATH.'admin/include/photos_add_direct_prepare.inc.php');
 
 
 // +-----------------------------------------------------------------------+
@@ -38,13 +46,20 @@ check_status(ACCESS_ADMINISTRATOR);
 
 
 // +-----------------------------------------------------------------------+
+// | Load configuration                                                    |
+// +-----------------------------------------------------------------------+
+
+$upload_form_config = get_upload_form_config();
+
+
+// +-----------------------------------------------------------------------+
 // | Tab setup                                                             |
 // +-----------------------------------------------------------------------+
 
-$page['tab'] = 'ppm';
+$page['tab'] = 'ppu';
 $tabsheet = new tabsheet();
 $tabsheet->set_id('photos_add');
-$tabsheet->select('ppu');
+$tabsheet->select($page['tab']);
 $tabsheet->assign();
 
 
@@ -54,7 +69,7 @@ $tabsheet->assign();
 
 $template->set_filenames(
   array(
-    'photos_add' => dirname(__FILE__).'/admin.tpl'
+    'plugin_admin_content' => dirname(__FILE__).'/admin.tpl'
     )
   );
 
@@ -63,5 +78,5 @@ $template->set_filenames(
 // | Send HTML code                                                        |
 // +-----------------------------------------------------------------------+
 
-$template->assign_var_from_handle('ADMIN_CONTENT', 'photos_add');
+$template->assign_var_from_handle('ADMIN_CONTENT', 'plugin_admin_content');
 ?>

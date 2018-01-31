@@ -1,3 +1,3 @@
 <?php
-$lang['TEMP1'] = 'temp 1';
+$lang['UPLOAD_TAB'] = 'Physical Upload';
 ?>

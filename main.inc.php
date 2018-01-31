@@ -15,6 +15,24 @@ if (!defined('PHPWG_ROOT_PATH'))
 
 define('PPU_PATH', PHPWG_PLUGINS_PATH.basename(dirname(__FILE__)).'/');
 
+
+// add ppu tab to the Add Photos tabset
+add_event_handler('tabsheet_before_select','ppu_add_tab');
+
+function ppu_add_tab($sheets, $id)
+{
+  if ($id == 'photos_add')
+  {
+    $sheets['ppu'] = array(
+      'caption' => '<span class="icon-floppy"></span>'.l10n('UPLOAD_TAB'),
+      'url' => get_root_url().'admin.php?page=plugin-physical_photo_upload',
+      );
+  }
+
+  return $sheets;
+}
+
+
 // add language/translation support
 add_event_handler('loading_lang', 'ppu_loading_lang');
 
@@ -22,6 +40,5 @@ function ppu_loading_lang()
 {
   load_language('plugin.lang', PPU_PATH);
 }
-
 
 ?>
